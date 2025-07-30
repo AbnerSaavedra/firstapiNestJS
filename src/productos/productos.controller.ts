@@ -13,6 +13,14 @@ export class ProductosController {
       return this.productosService.getProductos();
   }
 
+ @Get('info')
+ getInfo(@Headers('user-agent') agente: string){
+    return {
+      mensaje: "Información del cliente",
+      navegador: agente
+    }
+ }
+
 @Get('buscar')filtrarPorNombreOPrecio(
   @Query('nombre') nombre?: string,
   @Query('precioMin') precioMin?: string,
@@ -39,6 +47,7 @@ export class ProductosController {
     }
   }
   
+
 @Post('')
   crear(@Body() data: { nombre: string; precio: number }) {
     return this.productosService.crearProducto(data);
