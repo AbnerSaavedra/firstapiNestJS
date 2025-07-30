@@ -1,4 +1,4 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Query, Headers, HttpException, HttpStatus } from '@nestjs/common';
 import { ProductosService } from './productos.service';
 
 @Controller('productos')
@@ -21,7 +21,8 @@ export class ProductosController {
 }
   
   @Get(':id')
-  buscarPorId(@Param('id') id: string) {
+  buscarPorId(@Param('id') id: string,
+  @Headers('x-token') token: string) {
     const idNum = parseInt(id, 10);
     const producto = this.productosService.getProductoPorID(idNum);
 
@@ -29,12 +30,34 @@ export class ProductosController {
       throw new NotFoundException(`Producto con ID ${idNum} no encontrado`);
     }
 
-    return producto;
+    //return producto;
+
+    return {
+      mensaje: "producto encontrado",
+      producto: producto,
+      tokenRecibido: token
+    }
   }
   
-@Post('crear')
+@Post('')
   crear(@Body() data: { nombre: string; precio: number }) {
     return this.productosService.crearProducto(data);
+  }
+
+  @Post('crear')
+  crearProducto(
+    @Body() data: { nombre: string; precio: number },
+    @Headers('authorization') auth: string
+  ) {
+    if (!auth || !auth.startsWith('Bearer ')) {
+      throw new HttpException('Token inválido o ausente', HttpStatus.UNAUTHORIZED);
+    }
+
+    return {
+      mensaje: 'Producto creado',
+      tokenUsado: auth,
+      datos: data,
+    };
   }
 
 }
