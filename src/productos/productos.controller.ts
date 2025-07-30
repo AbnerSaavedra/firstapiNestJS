@@ -1,4 +1,4 @@
-import { Controller, Get, NotFoundException, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Query } from '@nestjs/common';
 import { ProductosService } from './productos.service';
 
 @Controller('productos')
@@ -9,8 +9,8 @@ export class ProductosController {
 
    @Get('all')
    getProduct(): any {
-    return this.productosService.getProductos()[2][0];
-    //return this.productosService.getProductos();
+    //return this.productosService.getProductos()[2][0];
+      return this.productosService.getProductos();
   }
 
 @Get('buscar')filtrarPorNombreOPrecio(
@@ -31,6 +31,10 @@ export class ProductosController {
 
     return producto;
   }
-
+  
+@Post('crear')
+  crear(@Body() data: { nombre: string; precio: number }) {
+    return this.productosService.crearProducto(data);
+  }
 
 }

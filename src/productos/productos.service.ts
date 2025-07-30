@@ -11,10 +11,7 @@ export class ProductosService {
   ];
 
  getProductos(){
-        return [
-        { id: 1, nombre: 'Laptop', precio: 1200 },
-        { id: 2, nombre: 'Teclado', precio: 75 }
-        ];
+        return this.productos
 }
 
 getProductoPorID(id: number){
@@ -36,5 +33,14 @@ filtrar(nombre?: string, precioMin?: string) {
     }
 
     return resultado;
+  }
+
+  crearProducto(data: { nombre: string; precio: number }) {
+    const nuevoProducto = {
+      id: this.productos.length + 1,
+      ...data,
+    };
+    this.productos.push(nuevoProducto);
+    return nuevoProducto;
   }
 }
