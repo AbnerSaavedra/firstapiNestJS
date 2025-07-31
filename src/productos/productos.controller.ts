@@ -1,5 +1,7 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, Query, Headers, HttpException, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Query, Headers, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { ProductosService } from './productos.service';
+import { CreateProductoDto } from './dto/create-producto.dto';
+import { Response } from 'express';
 
 @Controller('productos')
 export class ProductosController {
@@ -45,6 +47,15 @@ export class ProductosController {
       producto: producto,
       tokenRecibido: token
     }
+  }
+
+  @Post('crearDTO')
+  crearProductoDTO(
+    @Body() data: CreateProductoDto, @Res() res: Response
+  ) {
+    //return this.productosService.crearProductoDTO(data)
+    if(this.productosService.crearProductoDTO(data))
+      res.status(201).json({"mensaje": "Recurso creado exitosamente"})
   }
   
 

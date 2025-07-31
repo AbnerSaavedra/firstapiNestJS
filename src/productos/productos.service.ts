@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CreateProductoDto } from './dto/create-producto.dto';
 
 @Injectable()
 export class ProductosService {
@@ -36,6 +37,15 @@ filtrar(nombre?: string, precioMin?: string) {
   }
 
   crearProducto(data: { nombre: string; precio: number }) {
+    const nuevoProducto = {
+      id: this.productos.length + 1,
+      ...data,
+    };
+    this.productos.push(nuevoProducto);
+    return nuevoProducto;
+  }
+
+  crearProductoDTO(data: CreateProductoDto) {
     const nuevoProducto = {
       id: this.productos.length + 1,
       ...data,
