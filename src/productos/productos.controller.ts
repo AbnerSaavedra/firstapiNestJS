@@ -1,4 +1,4 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, Query, Headers, HttpException, HttpStatus, Res } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Query, Headers, HttpException, HttpStatus, Res, BadRequestException } from '@nestjs/common';
 import { ProductosService } from './productos.service';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { Response } from 'express';

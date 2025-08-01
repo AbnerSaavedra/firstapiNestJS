@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateProductoDto } from './dto/create-producto.dto';
 
 @Injectable()
@@ -46,6 +46,11 @@ filtrar(nombre?: string, precioMin?: string) {
   }
 
   crearProductoDTO(data: CreateProductoDto) {
+
+    if (data.precio <= 0) {
+      throw new BadRequestException('El precio debe ser mayor a cero');
+    }
+
     const nuevoProducto = {
       id: this.productos.length + 1,
       ...data,
