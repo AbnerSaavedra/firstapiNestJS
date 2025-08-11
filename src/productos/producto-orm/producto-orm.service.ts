@@ -26,9 +26,15 @@ export class ProductoOrmService {
 
         const producto = await this.repo.findOneBy({ id });
 
-        if(!producto) throw new NotFoundException('Producto no encontrado');
+        if (!producto) {
+            throw new NotFoundException('Producto no encontrado');
+        }
 
-        return producto;
+        // Aplica los cambios del DTO al producto existente
+        Object.assign(producto, dto);
+
+        // Guarda el producto actualizado
+        return await this.repo.save(producto);
 }
 
     async remove(id: number) { 
