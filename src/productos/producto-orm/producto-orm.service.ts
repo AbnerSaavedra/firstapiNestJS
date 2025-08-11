@@ -39,8 +39,12 @@ export class ProductoOrmService {
 
     async remove(id: number) { 
         const producto = await this.repo.findOneBy({ id });
-        if(!producto) throw new NotFoundException('Producto   no encontrado');
-        await producto.delete({id}); 
+        if (!producto) {
+            throw new NotFoundException('🛑 Producto no encontrado');
+        }
+
+        await this.repo.remove(producto);
+        return '✅ Producto eliminado exitosamente';
 }
 
 }

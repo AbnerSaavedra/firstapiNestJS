@@ -15,7 +15,7 @@ export class ProductosORMController{
     return this.service.findOne(+id); 
     }
 
-    @Post('create') create(@Body() dto: CreateProductoDto) { 
+    @Post('') create(@Body() dto: CreateProductoDto) { 
     return this.service.create(dto); 
     }
     
