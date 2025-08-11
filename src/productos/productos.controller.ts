@@ -5,9 +5,18 @@ import { Response } from 'express';
 
 @Controller('productos')
 export class ProductosController {
-    constructor(private readonly productosService: ProductosService){
+  //private producService: ProductosService 
 
+    constructor(private readonly productosService: ProductosService){
+    
+      //this.producService = new ProductosService()
     }
+
+    /*constructor(){
+     // Instanciación manual del servicio
+      this.producService = new ProductosService()
+    }*/
+
 
    @Get('all')
    getProduct(): any {
