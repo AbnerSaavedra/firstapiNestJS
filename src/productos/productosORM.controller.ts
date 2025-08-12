@@ -7,23 +7,28 @@ import { UpdateProductoDto } from "./dto/update-productoORM.dto";
 export class ProductosORMController{
     constructor(private readonly service: ProductoOrmService) {}
     
-    @Get() findAll() { 
+    @Get() 
+    findAll() { 
     return this.service.findAll(); 
     }
     
-    @Get(':id') findOne(@Param('id') id: string) { 
+    @Get(':id') 
+    findOne(@Param('id') id: string) { 
     return this.service.findOne(+id); 
     }
 
-    @Post('') create(@Body() dto: CreateProductoDto) { 
+    @Post('') 
+    create(@Body() dto: CreateProductoDto) { 
     return this.service.create(dto); 
     }
     
-    @Put(':id') update(@Param('id') id: string, @Body() dto: UpdateProductoDto) {
+    @Put(':id') 
+    update(@Param('id') id: string, @Body() dto: UpdateProductoDto) {
     return this.service.update(+id, dto);
     }
     
-    @Delete(':id') remove(@Param('id') id: string) { 
+    @Delete(':id') 
+    remove(@Param('id') id: string) { 
     return this.service.remove(+id); 
     }
 }
