@@ -48,6 +48,7 @@ filtrar(nombre?: string, precioMin?: string) {
   crearProductoDTO(data: CreateProductoDto) {
 
     if (data.precio <= 0) {
+      // Se lanza una excepción básica
       throw new BadRequestException('El precio debe ser mayor a cero');
     }
 
