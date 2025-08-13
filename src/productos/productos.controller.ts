@@ -1,8 +1,10 @@
-import { Body, Controller, Get, NotFoundException, Param, Post, Query, Headers, HttpException, HttpStatus, Res, BadRequestException } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Query, Headers, HttpException, HttpStatus, Res, BadRequestException, UseFilters } from '@nestjs/common';
 import { ProductosService } from './productos.service';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { Response } from 'express';
+import { ProductoExceptionFilter } from './filters/producto-exception.filter/producto-exception.filter';
 
+@UseFilters(ProductoExceptionFilter)
 @Controller('productos')
 export class ProductosController {
   //private producService: ProductosService 
@@ -44,12 +46,10 @@ export class ProductosController {
   @Headers('x-token') token: string) {
     const idNum = parseInt(id, 10);
     const producto = this.productosService.getProductoPorID(idNum);
-
-    if (!producto) {
-
-      // Se lanza excepción semántica con contexto
-      throw new NotFoundException(`Producto con ID ${idNum} no encontrado`);
-    }
+    
+    // Se lanza excepción semántica con contexto
+    if (!producto) throw new NotFoundException(`Producto con ID ${idNum} no encontrado`);
+  
 
     //return producto;
 
