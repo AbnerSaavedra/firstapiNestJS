@@ -46,6 +46,8 @@ export class ProductosController {
     const producto = this.productosService.getProductoPorID(idNum);
 
     if (!producto) {
+
+      // Se lanza excepción semántica con contexto
       throw new NotFoundException(`Producto con ID ${idNum} no encontrado`);
     }
 
