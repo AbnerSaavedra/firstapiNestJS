@@ -5,6 +5,8 @@ import { ProductosModule } from './productos/productos.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from './logger/logger.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [ProductosModule,
@@ -19,7 +21,9 @@ import { UsuariosModule } from './usuarios/usuarios.module';
       synchronize: true, // solo en desarrollo
     }),
     LoggerModule,
-    UsuariosModule,
+    AuthModule,
+    UsersModule,
+    UsuariosModule
   ],
   controllers: [AppController],
   providers: [AppService],

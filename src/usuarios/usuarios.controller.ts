@@ -1,6 +1,10 @@
-import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Param, UseGuards } from '@nestjs/common';
 import { UsuariosModule } from './usuarios.module';
 import { UsuariosService } from './usuarios.service';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/auth/roles.enum';
 
 @Controller('usuarios')
 export class UsuariosController {
@@ -22,6 +26,13 @@ export class UsuariosController {
     if(idNum <= 0)
         throw new NotFoundException(`Usuario con ID ${idNum} no encontrado`);
     return idNum
+  }
+
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(Role.Admin)
+  @Get()
+  findAll(){
+    return this.usuariosService.getUsuarios()
   }
 
 }
